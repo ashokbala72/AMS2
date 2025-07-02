@@ -1,0 +1,101 @@
+Ticket ID,SAP Module,Transaction Code,Recent Log/Error Snippet,Business Process Affected,Previous Fix Attempt,Priority,Region,Issue Summary
+TKT-1001,HR,PA30,Short dump in custom report ZFI123,Vendor invoice posting,Restarted workflow,Medium,US,Error in transaction F110 due to GUI crash on execution
+TKT-1002,CO,CO01,Short dump in custom report ZFI123,Sales order booking,Validated config entries,Medium,APAC,Error in transaction SE38 due to authorization failure
+TKT-1003,PP,FB60,Invalid table lock entry,Cost center reporting,Validated config entries,Medium,EU,Error in transaction SM36 due to plant not assigned to company code
+TKT-1004,SD,VA01,Missing configuration for document type,Purchase order creation,Reassigned authorizations,High,US,Error in transaction ME51N due to plant not assigned to company code
+TKT-1005,FI,KSB1,NullReferenceException in background job,Cost center reporting,Validated config entries,Critical,APAC,Error in transaction ME51N due to GUI crash on execution
+TKT-1006,SD,PA30,Missing configuration for document type,Production order release,Reassigned authorizations,Critical,US,Error in transaction F110 due to data type mismatch in BAPI
+TKT-1007,CO,CO01,Missing configuration for document type,Purchase order creation,Reassigned authorizations,Low,US,Error in transaction F110 due to RFC destination not maintained
+TKT-1008,FI,PA30,NullReferenceException in background job,Production order release,Restarted workflow,Medium,APAC,Error in transaction SE38 due to GUI crash on execution
+TKT-1009,SD,CO01,Invalid table lock entry,Cost center reporting,Validated config entries,Critical,MEA,Error in transaction VL31N due to buffer overflow in memory
+TKT-1010,HR,KSB1,Missing configuration for document type,Employee master update,No fix attempted yet,High,EU,Error in transaction FB60 due to null reference object
+TKT-1011,FI,VA01,Missing configuration for document type,Vendor invoice posting,Restarted workflow,Critical,APAC,Error in transaction VL02N due to invalid currency conversion
+TKT-1012,SD,PA30,Missing configuration for document type,Production order release,Restarted workflow,Critical,EU,Error in transaction MIRO due to ALV layout not saving
+TKT-1013,PP,CO01,Short dump in custom report ZFI123,Production order release,No fix attempted yet,Low,APAC,Error in transaction VF02 due to invalid document number
+TKT-1014,SD,VA01,Authorization check failed,Employee master update,No fix attempted yet,Critical,EU,Error in transaction ME21N due to invalid currency conversion
+TKT-1015,MM,VA01,NullReferenceException in background job,Sales order booking,Validated config entries,High,EU,Error in transaction CO01 due to authorization failure
+TKT-1016,HR,KSB1,NullReferenceException in background job,Sales order booking,Re-ran job in foreground,High,MEA,Error in transaction MM01 due to data type mismatch in BAPI
+TKT-1017,MM,CO01,Short dump in custom report ZFI123,Employee master update,No fix attempted yet,Medium,EU,Error in transaction ME21N due to system timeout during processing
+TKT-1018,CO,PA30,Short dump in custom report ZFI123,Cost center reporting,Reassigned authorizations,Critical,US,Error in transaction VA01 due to RFC destination not maintained
+TKT-1019,PP,FB60,Missing configuration for document type,Vendor invoice posting,Re-ran job in foreground,Low,US,Error in transaction CO01 due to invalid document number
+TKT-1020,PP,VA01,Short dump in custom report ZFI123,Purchase order creation,Validated config entries,Medium,EU,Error in transaction VA01 due to GUI crash on execution
+TKT-1021,SD,CO01,NullReferenceException in background job,Sales order booking,Checked with Basis team,Medium,EU,Error in transaction FB60 due to invalid document number
+TKT-1022,SD,KSB1,Short dump in custom report ZFI123,Production order release,Re-ran job in foreground,High,EU,Error in transaction CO01 due to missing configuration
+TKT-1023,HR,PA30,RFC destination not maintained,Sales order booking,Re-ran job in foreground,Low,EU,Error in transaction SE38 due to system timeout during processing
+TKT-1024,HR,CO01,Missing configuration for document type,Production order release,Re-ran job in foreground,Critical,APAC,Error in transaction MB1C due to partner function missing
+TKT-1025,FI,VA01,Invalid table lock entry,Sales order booking,Reassigned authorizations,Low,APAC,Error in transaction VL10B due to partner function missing
+TKT-1026,PP,KSB1,Missing configuration for document type,Purchase order creation,Re-ran job in foreground,Critical,MEA,Error in transaction WE02 due to posting period not open
+TKT-1027,CO,CO01,RFC destination not maintained,Sales order booking,Checked with Basis team,Medium,APAC,Error in transaction FB60 due to RFC destination not maintained
+TKT-1028,PP,PA30,Invalid table lock entry,Cost center reporting,No fix attempted yet,Medium,APAC,Error in transaction VF02 due to buffer overflow in memory
+TKT-1029,SD,PA30,Authorization check failed,Employee master update,Restarted workflow,Critical,US,Error in transaction MM01 due to ALV layout not saving
+TKT-1030,HR,ME21N,RFC destination not maintained,Sales order booking,No fix attempted yet,High,APAC,Error in transaction SM36 due to report variant not loading
+TKT-1031,SD,PA30,NullReferenceException in background job,Cost center reporting,Validated config entries,Medium,EU,Error in transaction VL10B due to invalid currency conversion
+TKT-1032,HR,VA01,RFC destination not maintained,Employee master update,Restarted workflow,Low,US,Error in transaction VL31N due to invalid currency conversion
+TKT-1033,MM,ME21N,RFC destination not maintained,Purchase order creation,Reassigned authorizations,Critical,EU,Error in transaction F110 due to partner function missing
+TKT-1034,HR,CO01,Invalid table lock entry,Production order release,Reassigned authorizations,Medium,US,Error in transaction SE38 due to posting period not open
+TKT-1035,HR,CO01,Missing configuration for document type,Production order release,Reassigned authorizations,Medium,APAC,Error in transaction VL02N due to null reference object
+TKT-1036,HR,CO01,RFC destination not maintained,Production order release,Restarted workflow,Medium,APAC,Error in transaction MM01 due to RFC destination not maintained
+TKT-1037,SD,VA01,Missing configuration for document type,Production order release,Restarted workflow,High,EU,Error in transaction WE02 due to invalid document number
+TKT-1038,CO,FB60,NullReferenceException in background job,Purchase order creation,No fix attempted yet,Medium,MEA,Error in transaction ME51N due to data type mismatch in BAPI
+TKT-1039,CO,KSB1,RFC destination not maintained,Production order release,Validated config entries,Low,APAC,Error in transaction WE02 due to plant not assigned to company code
+TKT-1040,SD,VA01,RFC destination not maintained,Purchase order creation,Validated config entries,High,EU,Error in transaction ME51N due to ALV layout not saving
+TKT-1041,FI,FB60,Invalid table lock entry,Purchase order creation,Validated config entries,Critical,APAC,Error in transaction VL02N due to GUI crash on execution
+TKT-1042,FI,KSB1,NullReferenceException in background job,Cost center reporting,Re-ran job in foreground,High,EU,Error in transaction MB1C due to GUI crash on execution
+TKT-1043,MM,CO01,Missing configuration for document type,Production order release,No fix attempted yet,Low,MEA,Error in transaction VF01 due to invalid currency conversion
+TKT-1044,PP,CO01,Invalid table lock entry,Employee master update,Validated config entries,Medium,US,Error in transaction ME51N due to partner function missing
+TKT-1045,FI,KSB1,Missing configuration for document type,Vendor invoice posting,Re-ran job in foreground,Low,US,Error in transaction SM36 due to GUI crash on execution
+TKT-1046,SD,FB60,Missing configuration for document type,Production order release,Re-ran job in foreground,Low,EU,Error in transaction ME51N due to buffer overflow in memory
+TKT-1047,MM,FB60,Invalid table lock entry,Production order release,Reassigned authorizations,Low,US,Error in transaction VL10B due to buffer overflow in memory
+TKT-1048,FI,VA01,NullReferenceException in background job,Purchase order creation,Restarted workflow,Critical,EU,Error in transaction VL10B due to missing configuration
+TKT-1049,HR,ME21N,Short dump in custom report ZFI123,Purchase order creation,Restarted workflow,Critical,EU,Error in transaction FB60 due to ALV layout not saving
+TKT-1050,PP,KSB1,Missing configuration for document type,Vendor invoice posting,Validated config entries,Medium,EU,Error in transaction MIRO due to missing configuration
+TKT-1051,CO,KSB1,Missing configuration for document type,Vendor invoice posting,Re-ran job in foreground,High,APAC,Error in transaction ME21N due to buffer overflow in memory
+TKT-1052,CO,CO01,Invalid table lock entry,Purchase order creation,Reassigned authorizations,High,APAC,Error in transaction ME51N due to authorization failure
+TKT-1053,FI,VA01,Short dump in custom report ZFI123,Cost center reporting,Validated config entries,Medium,EU,Error in transaction SE38 due to invalid document number
+TKT-1054,MM,FB60,Short dump in custom report ZFI123,Vendor invoice posting,Re-ran job in foreground,High,MEA,Error in transaction F110 due to buffer overflow in memory
+TKT-1055,CO,VA01,Invalid table lock entry,Sales order booking,Checked with Basis team,Medium,MEA,Error in transaction MIRO due to invalid currency conversion
+TKT-1056,HR,VA01,Short dump in custom report ZFI123,Purchase order creation,Re-ran job in foreground,Medium,MEA,Error in transaction ST22 due to plant not assigned to company code
+TKT-1057,MM,ME21N,Short dump in custom report ZFI123,Cost center reporting,Reassigned authorizations,Low,EU,Error in transaction MM01 due to unexpected dump in runtime
+TKT-1058,CO,KSB1,Missing configuration for document type,Employee master update,Restarted workflow,High,EU,Error in transaction ST22 due to invalid document number
+TKT-1059,HR,FB60,NullReferenceException in background job,Purchase order creation,Reassigned authorizations,Medium,MEA,Error in transaction MB1C due to report variant not loading
+TKT-1060,MM,PA30,Short dump in custom report ZFI123,Cost center reporting,Validated config entries,Medium,APAC,Error in transaction VL02N due to authorization failure
+TKT-1061,HR,FB60,Invalid table lock entry,Vendor invoice posting,No fix attempted yet,High,MEA,Error in transaction VL31N due to invalid document number
+TKT-1062,PP,KSB1,Authorization check failed,Employee master update,Validated config entries,Critical,EU,Error in transaction ME21N due to unexpected dump in runtime
+TKT-1063,FI,ME21N,Authorization check failed,Cost center reporting,Validated config entries,Critical,APAC,Error in transaction SM36 due to authorization failure
+TKT-1064,MM,ME21N,Authorization check failed,Sales order booking,No fix attempted yet,Low,APAC,Error in transaction VL02N due to unexpected dump in runtime
+TKT-1065,PP,PA30,Invalid table lock entry,Production order release,Checked with Basis team,High,MEA,Error in transaction SE38 due to partner function missing
+TKT-1066,CO,PA30,NullReferenceException in background job,Sales order booking,Restarted workflow,Medium,APAC,Error in transaction VF02 due to data type mismatch in BAPI
+TKT-1067,SD,ME21N,Missing configuration for document type,Cost center reporting,Validated config entries,Medium,US,Error in transaction MIRO due to GUI crash on execution
+TKT-1068,FI,KSB1,Short dump in custom report ZFI123,Purchase order creation,Validated config entries,High,EU,Error in transaction SM36 due to invalid currency conversion
+TKT-1069,SD,PA30,Short dump in custom report ZFI123,Purchase order creation,Checked with Basis team,Low,US,Error in transaction ST22 due to system timeout during processing
+TKT-1070,CO,ME21N,RFC destination not maintained,Vendor invoice posting,Reassigned authorizations,High,US,Error in transaction MIRO due to unexpected dump in runtime
+TKT-1071,SD,FB60,Short dump in custom report ZFI123,Production order release,Re-ran job in foreground,Low,MEA,Error in transaction MIRO due to report variant not loading
+TKT-1072,SD,VA01,RFC destination not maintained,Sales order booking,No fix attempted yet,High,APAC,Error in transaction VL31N due to partner function missing
+TKT-1073,FI,KSB1,Invalid table lock entry,Cost center reporting,Checked with Basis team,High,US,Error in transaction MM01 due to GUI crash on execution
+TKT-1074,FI,VA01,RFC destination not maintained,Sales order booking,Re-ran job in foreground,High,US,Error in transaction ME21N due to plant not assigned to company code
+TKT-1075,FI,KSB1,Invalid table lock entry,Cost center reporting,Validated config entries,Low,MEA,Error in transaction VL31N due to ALV layout not saving
+TKT-1076,CO,VA01,NullReferenceException in background job,Vendor invoice posting,No fix attempted yet,High,MEA,Error in transaction CO01 due to report variant not loading
+TKT-1077,PP,KSB1,NullReferenceException in background job,Cost center reporting,Reassigned authorizations,Low,MEA,Error in transaction SM36 due to buffer overflow in memory
+TKT-1078,CO,PA30,Authorization check failed,Production order release,Reassigned authorizations,High,EU,Error in transaction FB60 due to invalid currency conversion
+TKT-1079,PP,KSB1,Short dump in custom report ZFI123,Production order release,No fix attempted yet,High,US,Error in transaction VL10B due to invalid document number
+TKT-1080,FI,KSB1,NullReferenceException in background job,Cost center reporting,Validated config entries,Low,US,Error in transaction F110 due to posting period not open
+TKT-1081,HR,FB60,RFC destination not maintained,Employee master update,Checked with Basis team,Critical,US,Error in transaction VL10B due to GUI crash on execution
+TKT-1082,PP,FB60,NullReferenceException in background job,Cost center reporting,Re-ran job in foreground,High,APAC,Error in transaction ST22 due to missing configuration
+TKT-1083,MM,VA01,Short dump in custom report ZFI123,Production order release,Restarted workflow,High,APAC,Error in transaction VF01 due to ALV layout not saving
+TKT-1084,CO,ME21N,RFC destination not maintained,Cost center reporting,Checked with Basis team,Critical,EU,Error in transaction ME51N due to RFC destination not maintained
+TKT-1085,CO,PA30,NullReferenceException in background job,Purchase order creation,Checked with Basis team,Critical,EU,Error in transaction VA01 due to report variant not loading
+TKT-1086,FI,KSB1,Short dump in custom report ZFI123,Employee master update,Checked with Basis team,Critical,MEA,Error in transaction VL02N due to posting period not open
+TKT-1087,PP,KSB1,Short dump in custom report ZFI123,Production order release,Reassigned authorizations,Medium,APAC,Error in transaction WE02 due to report variant not loading
+TKT-1088,SD,FB60,RFC destination not maintained,Production order release,Restarted workflow,High,APAC,Error in transaction SE38 due to null reference object
+TKT-1089,SD,PA30,Authorization check failed,Cost center reporting,Checked with Basis team,Critical,US,Error in transaction CO01 due to posting period not open
+TKT-1090,SD,KSB1,Missing configuration for document type,Production order release,Reassigned authorizations,Low,APAC,Error in transaction VF01 due to data type mismatch in BAPI
+TKT-1091,SD,KSB1,Invalid table lock entry,Production order release,No fix attempted yet,Critical,EU,Error in transaction ST22 due to GUI crash on execution
+TKT-1092,MM,KSB1,Missing configuration for document type,Employee master update,Restarted workflow,Critical,EU,Error in transaction MB1C due to RFC destination not maintained
+TKT-1093,CO,ME21N,RFC destination not maintained,Sales order booking,Restarted workflow,Critical,APAC,Error in transaction VF01 due to system timeout during processing
+TKT-1094,FI,KSB1,Short dump in custom report ZFI123,Vendor invoice posting,Restarted workflow,Medium,MEA,Error in transaction VL10B due to data type mismatch in BAPI
+TKT-1095,PP,ME21N,Invalid table lock entry,Vendor invoice posting,Validated config entries,High,APAC,Error in transaction WE02 due to unexpected dump in runtime
+TKT-1096,HR,ME21N,Missing configuration for document type,Vendor invoice posting,Restarted workflow,Critical,APAC,Error in transaction VL31N due to GUI crash on execution
+TKT-1097,FI,VA01,RFC destination not maintained,Purchase order creation,Restarted workflow,Medium,US,Error in transaction SM36 due to ALV layout not saving
+TKT-1098,FI,ME21N,NullReferenceException in background job,Vendor invoice posting,Reassigned authorizations,Critical,APAC,Error in transaction ME21N due to ALV layout not saving
+TKT-1099,CO,CO01,Authorization check failed,Purchase order creation,Checked with Basis team,Medium,US,Error in transaction VF02 due to system timeout during processing
+TKT-1100,MM,CO01,Missing configuration for document type,Cost center reporting,No fix attempted yet,Medium,MEA,Error in transaction WE02 due to partner function missing
