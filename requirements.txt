@@ -3,7 +3,7 @@ streamlit-autorefresh>=0.0.3
 pandas>=2.1.0
 openai>=1.3.5
 python-dotenv>=1.0.0
-fpdf>=1.7.2
+fpdf
 langchain[chromadb]>=0.1.0
 langchain_community
 scikit-learn>=1.3.0
