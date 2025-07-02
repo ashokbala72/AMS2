@@ -10,3 +10,12 @@ chromadb>=0.4.13
 scikit-learn>=1.3.0
 tqdm
 protobuf<4.24
+streamlit==1.35.0
+pandas
+openai
+python-dotenv
+fpdf
+scikit-learn
+langchain
+faiss-cpu
+tiktoken
