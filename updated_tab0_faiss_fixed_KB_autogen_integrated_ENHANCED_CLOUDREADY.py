@@ -474,7 +474,7 @@ with tabs[6]:
             import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 pdf.output(tmp_file.name)
-                pdf_path = tmp_file.name
+    pdf_path = tmp_file.name
                         st.session_state[f"{kb_key}_pdf"] = pdf_path
                         generated_this_round = True
                         st.success("✅ KB Article Generated")
@@ -516,7 +516,7 @@ with tabs[7]:
         import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 pdf.output(tmp_file.name)
-                pdf_path = tmp_file.name
+    pdf_path = tmp_file.name
                     st.session_state[f"{rca_key}_pdf"] = pdf_path
                     validated_this_round = True
                     st.success("✅ RCA Validation Generated")
@@ -605,7 +605,7 @@ with tabs[9]:
         import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 pdf.output(tmp_file.name)
-                pdf_path = tmp_file.name
+    pdf_path = tmp_file.name
                     st.session_state[f"{impact_key}_pdf"] = pdf_path
                     impact_this_round = True
                     st.success("✅ Impact Report Generated")
