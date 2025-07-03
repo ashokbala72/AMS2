@@ -526,27 +526,64 @@ Please write a SAP-style KB article."""
                 st.info("⏳ KB Article will be generated in next refresh.")
             st.markdown("---")
 
-# ------------------------ TAB 7 ------------------------with tabs[7]:
+# ------------------------ TAB 7 ------------------------
+with tabs[7]:
     st.header("🧪 RCA Validator")
     from fpdf import FPDF
+    import tempfile
 
     st.info("⏳ Waiting for RCA validation to start...")
     validated_this_round = False
+
     for t in [t for t in st.session_state.tickets if t["step"] >= 4]:
         ticket_id = t["id"]
         rca_key = f"rca_{ticket_id}"
         issue_summary = st.session_state.ticket_context_df.loc[
             st.session_state.ticket_context_df["Ticket ID"] == ticket_id, "Issue Summary"
         ].values[0] if ticket_id in st.session_state.ticket_context_df["Ticket ID"].values else "Summary missing"
+
         five_whys = st.session_state.why_map.get(ticket_id, "Missing 5 Whys")
         root = st.session_state.eight_d_map.get(ticket_id, "Missing root cause")
-        import tempfile
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
-                pdf.output(tmp_file.name)
-    pdf_path = tmp_file.name
-                    st.session_state[f"{rca_key}_pdf"] = pdf_path
+
+        st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue_summary}**")
+
+        if rca_key not in st.session_state and not validated_this_round:
+            with st.spinner(f"Validating RCA for {ticket_id}..."):
+                try:
+                    prompt = f"""Evaluate RCA for this SAP AMS issue.
+
+Summary: {issue_summary}
+Root Cause: {root}
+5 Whys Analysis: {five_whys}
+
+Is the RCA logically sound? Suggest improvements if needed."""
+                    response = client.chat.completions.create(
+                        model="gpt-3.5-turbo",
+                        messages=[{"role": "user", "content": prompt}],
+                        max_tokens=500
+                    )
+                    result = response.choices[0].message.content.strip()
+                    st.session_state[rca_key] = result
+
+                    pdf = FPDF()
+                    pdf.add_page()
+                    pdf.set_font("Arial", size=12)
+                    pdf.multi_cell(0, 10, f"""Ticket ID: {ticket_id}
+
+Issue Summary:
+{issue_summary}
+
+RCA Validation Result:
+{result}""")
+
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                        pdf.output(tmp_file.name)
+                        pdf_path = tmp_file.name
+                        st.session_state[f"{rca_key}_pdf"] = pdf_path
+
                     validated_this_round = True
                     st.success("✅ RCA Validation Generated")
+
                     with open(pdf_path, "rb") as f:
                         st.download_button("📎 Download PDF", f, file_name=f"RCA_{ticket_id}.pdf", key=f"dl_rca_{ticket_id}")
                 except Exception as e:
@@ -566,6 +603,7 @@ Please write a SAP-style KB article."""
         else:
             st.info("⏳ RCA validation will be generated in next refresh.")
         st.markdown("---")
+
 
 
 # ------------------------ TAB 8 ------------------------
@@ -613,12 +651,15 @@ with tabs[8]:
 
 
 # ------------------------ TAB 9 ------------------------
+# ------------------------ TAB 9 ------------------------
 with tabs[9]:
     st.header("💼 Business Impact Estimator")
     from fpdf import FPDF
+    import tempfile
 
     st.info("⏳ Waiting for Business Impact estimation to start...")
     impact_this_round = False
+
     for t in [t for t in st.session_state.tickets if t["step"] == 6]:
         ticket_id = t["id"]
         impact_key = f"impact_{ticket_id}"
@@ -629,13 +670,49 @@ with tabs[9]:
         issue = context.get("Issue Summary", "Issue missing")
         business_area = context.get("Affected Business Process", "Area unknown")
         fix = st.session_state.fix_map.get(ticket_id, "Fix not found")
-        import tempfile
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
-                pdf.output(tmp_file.name)
-    pdf_path = tmp_file.name
-                    st.session_state[f"{impact_key}_pdf"] = pdf_path
+
+        st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue}**")
+
+        if impact_key not in st.session_state and not impact_this_round:
+            with st.spinner(f"Estimating business impact for {ticket_id}..."):
+                try:
+                    prompt = f"""You are a SAP AMS expert tasked with estimating the business impact of resolving this issue.
+
+Issue Summary: {issue}
+Fix Applied: {fix}
+Affected Business Area: {business_area}
+
+Please estimate:
+- Time saved
+- Effort avoided
+- Business risks mitigated
+
+Provide this as a short summary."""
+                    response = client.chat.completions.create(
+                        model="gpt-3.5-turbo",
+                        messages=[{"role": "user", "content": prompt}],
+                        max_tokens=300
+                    )
+                    impact = response.choices[0].message.content.strip()
+                    st.session_state[impact_key] = impact
+
+                    pdf = FPDF()
+                    pdf.add_page()
+                    pdf.set_font("Arial", size=12)
+                    pdf.multi_cell(0, 10, f"""Ticket ID: {ticket_id}
+
+Business Impact Summary:
+
+{impact}""")
+
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                        pdf.output(tmp_file.name)
+                        pdf_path = tmp_file.name
+                        st.session_state[f"{impact_key}_pdf"] = pdf_path
+
                     impact_this_round = True
                     st.success("✅ Impact Report Generated")
+
                     with open(pdf_path, "rb") as f:
                         st.download_button("📎 Download PDF", f, file_name=f"Impact_{ticket_id}.pdf", key=f"dl_impact_{ticket_id}")
                 except Exception as e:
@@ -656,32 +733,3 @@ with tabs[9]:
             st.info("⏳ Business impact will be generated in next refresh.")
         st.markdown("---")
 
-
-selected_ticket_id = st.session_state.get("selected_ticket_id", "")
-# ---------------- Tab 7: RCA Validator ----------------
-with tabs[7]:
-    st.subheader("🧪 RCA Validator")
-    if selected_ticket_id:
-        key = f"rca_{selected_ticket_id}"
-        st.markdown(st.session_state.get(key, "No RCA validation result yet."))
-
-# ---------------- Tab 8: Incident Mapper ----------------
-with tabs[8]:
-    st.subheader("🧭 Incident Mapper")
-    if selected_ticket_id:
-        key = f"incident_map_{selected_ticket_id}"
-        st.markdown(st.session_state.get(key, "No incident mapping data."))
-
-# ---------------- Tab 9: LLM Feedback Loop ----------------
-with tabs[9]:
-    st.subheader("🔁 LLM Feedback Loop")
-    if selected_ticket_id:
-        key = f"llm_feedback_{selected_ticket_id}"
-        st.markdown(st.session_state.get(key, "No LLM feedback recorded."))
-
-# ---------------- Tab 10: Business Impact Estimator ----------------
-with tabs[9]:
-    st.subheader("📈 Business Impact Estimator")
-    if selected_ticket_id:
-        key = f"impact_{selected_ticket_id}"
-        st.markdown(st.session_state.get(key, "No business impact calculated."))
