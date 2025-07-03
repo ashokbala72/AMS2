@@ -471,7 +471,10 @@ with tabs[6]:
             root = st.session_state.eight_d_map.get(ticket_id, "Root cause unavailable")
             fix = st.session_state.fix_map.get(ticket_id, "Fix unavailable")
             kb_key = f"kb_{ticket_id}"
-            pdf_path = f"/mnt/data/KB_{ticket_id}.pdf"
+            import tempfile
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                pdf.output(tmp_file.name)
+                pdf_path = tmp_file.name
 
             st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue_summary}**")
 
@@ -536,7 +539,10 @@ with tabs[7]:
         ].values[0] if ticket_id in st.session_state.ticket_context_df["Ticket ID"].values else "Summary missing"
         five_whys = st.session_state.why_map.get(ticket_id, "Missing 5 Whys")
         root = st.session_state.eight_d_map.get(ticket_id, "Missing root cause")
-        pdf_path = f"/mnt/data/RCA_{ticket_id}.pdf"
+        import tempfile
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                pdf.output(tmp_file.name)
+                pdf_path = tmp_file.name
 
         st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue_summary}**")
 
@@ -654,7 +660,10 @@ with tabs[9]:
         issue = context.get("Issue Summary", "Issue missing")
         business_area = context.get("Affected Business Process", "Area unknown")
         fix = st.session_state.fix_map.get(ticket_id, "Fix not found")
-        pdf_path = f"/mnt/data/Impact_{ticket_id}.pdf"
+        import tempfile
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                pdf.output(tmp_file.name)
+                pdf_path = tmp_file.name
 
         st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue}**")
 
