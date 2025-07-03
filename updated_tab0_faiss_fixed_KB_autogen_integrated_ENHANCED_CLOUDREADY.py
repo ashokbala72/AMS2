@@ -471,36 +471,10 @@ with tabs[6]:
             root = st.session_state.eight_d_map.get(ticket_id, "Root cause unavailable")
             fix = st.session_state.fix_map.get(ticket_id, "Fix unavailable")
             kb_key = f"kb_{ticket_id}"
-            pdf_path = ""
+            import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 pdf.output(tmp_file.name)
                 pdf_path = tmp_file.name
-
-            st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue_summary}**")
-
-            if kb_key not in st.session_state and not generated_this_round:
-                with st.spinner(f"Generating KB for {ticket_id}..."):
-                    try:
-                        prompt = f"""Ticket ID: {ticket_id}
-Issue Summary: {issue_summary}
-Root Cause: {root}
-Fix: {fix}
-Preventative Measures: What can avoid this in the future?
-
-Please write a SAP-style KB article."""
-                        response = client.chat.completions.create(
-                            model="gpt-3.5-turbo",
-                            messages=[{"role": "user", "content": prompt}],
-                            max_tokens=500
-                        )
-                        article = response.choices[0].message.content.strip()
-                        st.session_state[kb_key] = article
-
-                        pdf = FPDF()
-                        pdf.add_page()
-                        pdf.set_font("Arial", size=12)
-                        pdf.multi_cell(0, 10, article)
-                        pdf.output(pdf_path)
                         st.session_state[f"{kb_key}_pdf"] = pdf_path
                         generated_this_round = True
                         st.success("✅ KB Article Generated")
@@ -539,42 +513,10 @@ with tabs[7]:
         ].values[0] if ticket_id in st.session_state.ticket_context_df["Ticket ID"].values else "Summary missing"
         five_whys = st.session_state.why_map.get(ticket_id, "Missing 5 Whys")
         root = st.session_state.eight_d_map.get(ticket_id, "Missing root cause")
-        pdf_path = ""
+        import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 pdf.output(tmp_file.name)
                 pdf_path = tmp_file.name
-
-        st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue_summary}**")
-
-        if rca_key not in st.session_state and not validated_this_round:
-            with st.spinner(f"Validating RCA for {ticket_id}..."):
-                try:
-                    prompt = f"""Evaluate RCA for this SAP AMS issue.
-
-Summary: {issue_summary}
-Root Cause: {root}
-5 Whys Analysis: {five_whys}
-
-Is the RCA logically sound? Suggest improvements if needed."""
-                    response = client.chat.completions.create(
-                        model="gpt-3.5-turbo",
-                        messages=[{"role": "user", "content": prompt}],
-                        max_tokens=500
-                    )
-                    result = response.choices[0].message.content.strip()
-                    st.session_state[rca_key] = result
-
-                    pdf = FPDF()
-                    pdf.add_page()
-                    pdf.set_font("Arial", size=12)
-                    pdf.multi_cell(0, 10, f"""Ticket ID: {ticket_id}
-
-Issue Summary:
-{issue_summary}
-
-RCA Validation Result:
-{result}""")
-                    pdf.output(pdf_path)
                     st.session_state[f"{rca_key}_pdf"] = pdf_path
                     validated_this_round = True
                     st.success("✅ RCA Validation Generated")
@@ -660,45 +602,10 @@ with tabs[9]:
         issue = context.get("Issue Summary", "Issue missing")
         business_area = context.get("Affected Business Process", "Area unknown")
         fix = st.session_state.fix_map.get(ticket_id, "Fix not found")
-        pdf_path = ""
+        import tempfile
             with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                 pdf.output(tmp_file.name)
                 pdf_path = tmp_file.name
-
-        st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue}**")
-
-        if impact_key not in st.session_state and not impact_this_round:
-            with st.spinner(f"Estimating business impact for {ticket_id}..."):
-                try:
-                    prompt = f"""You are a SAP AMS expert tasked with estimating the business impact of resolving this issue.
-
-Issue Summary: {issue}
-Fix Applied: {fix}
-Affected Business Area: {business_area}
-
-Please estimate:
-- Time saved
-- Effort avoided
-- Business risks mitigated
-
-Provide this as a short summary."""
-                    response = client.chat.completions.create(
-                        model="gpt-3.5-turbo",
-                        messages=[{"role": "user", "content": prompt}],
-                        max_tokens=300
-                    )
-                    impact = response.choices[0].message.content.strip()
-                    st.session_state[impact_key] = impact
-
-                    pdf = FPDF()
-                    pdf.add_page()
-                    pdf.set_font("Arial", size=12)
-                    pdf.multi_cell(0, 10, f"""Ticket ID: {ticket_id}
-
-Business Impact Summary:
-
-{impact}""")
-                    pdf.output(pdf_path)
                     st.session_state[f"{impact_key}_pdf"] = pdf_path
                     impact_this_round = True
                     st.success("✅ Impact Report Generated")
