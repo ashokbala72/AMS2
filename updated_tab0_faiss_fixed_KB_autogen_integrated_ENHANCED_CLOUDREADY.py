@@ -456,6 +456,7 @@ Context:
 with tabs[6]:
     st.header("📝 KB Article Generator")
     from fpdf import FPDF
+    import tempfile
 
     kb_ready = [t for t in st.session_state.tickets if t["step"] >= 4]
     if not kb_ready:
@@ -471,13 +472,40 @@ with tabs[6]:
             root = st.session_state.eight_d_map.get(ticket_id, "Root cause unavailable")
             fix = st.session_state.fix_map.get(ticket_id, "Fix unavailable")
             kb_key = f"kb_{ticket_id}"
-            import tempfile
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
-                pdf.output(tmp_file.name)
-    pdf_path = tmp_file.name
-                        st.session_state[f"{kb_key}_pdf"] = pdf_path
+
+            st.markdown(f"**Ticket ID: {ticket_id} | Summary: {issue_summary}**")
+
+            if kb_key not in st.session_state and not generated_this_round:
+                with st.spinner(f"Generating KB for {ticket_id}..."):
+                    try:
+                        prompt = f"""Ticket ID: {ticket_id}
+Issue Summary: {issue_summary}
+Root Cause: {root}
+Fix: {fix}
+Preventative Measures: What can avoid this in the future?
+
+Please write a SAP-style KB article."""
+                        response = client.chat.completions.create(
+                            model="gpt-3.5-turbo",
+                            messages=[{"role": "user", "content": prompt}],
+                            max_tokens=500
+                        )
+                        article = response.choices[0].message.content.strip()
+                        st.session_state[kb_key] = article
+
+                        pdf = FPDF()
+                        pdf.add_page()
+                        pdf.set_font("Arial", size=12)
+                        pdf.multi_cell(0, 10, article)
+
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+                            pdf.output(tmp_file.name)
+                            pdf_path = tmp_file.name
+                            st.session_state[f"{kb_key}_pdf"] = pdf_path
+
                         generated_this_round = True
                         st.success("✅ KB Article Generated")
+
                         with open(pdf_path, "rb") as f:
                             st.download_button("📎 Download PDF", f, file_name=f"KB_{ticket_id}.pdf", key=f"dl_{ticket_id}")
                     except Exception as e:
@@ -498,8 +526,7 @@ with tabs[6]:
                 st.info("⏳ KB Article will be generated in next refresh.")
             st.markdown("---")
 
-# ------------------------ TAB 7 ------------------------
-with tabs[7]:
+# ------------------------ TAB 7 ------------------------with tabs[7]:
     st.header("🧪 RCA Validator")
     from fpdf import FPDF
 
