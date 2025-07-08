@@ -1,0 +1,41 @@
+Ticket ID,File Name,Mock Code Snippet
+TKT-1001,ZFI123.abap,"* Code from custom report ZFI123
+FORM get_data.
+  SELECT * FROM ztable INTO TABLE lt_data.
+ENDFORM."
+TKT-1002,ZFI123.abap,"* Code from custom report ZFI123
+FORM get_data.
+  SELECT * FROM ztable INTO TABLE lt_data.
+ENDFORM."
+TKT-1003,FB60_handler.abap,"* Handler for transaction FB60
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
+TKT-1004,VA01_handler.abap,"* Handler for transaction VA01
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
+TKT-1005,KSB1_handler.abap,"* Handler for transaction KSB1
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
+TKT-1006,PA30_handler.abap,"* Handler for transaction PA30
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
+TKT-1007,CO01_handler.abap,"* Handler for transaction CO01
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
+TKT-1008,PA30_handler.abap,"* Handler for transaction PA30
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
+TKT-1009,CO01_handler.abap,"* Handler for transaction CO01
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
+TKT-1010,KSB1_handler.abap,"* Handler for transaction KSB1
+FORM handle_transaction.
+  PERFORM validate_user.
+ENDFORM."
