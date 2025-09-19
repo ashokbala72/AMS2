@@ -413,21 +413,13 @@ with tabs[5]:
 
 
 # ------------------------ TAB 6 ------------------------
-# (KB Article Generator – same logic, just model=DEPLOYMENT_NAME)
-
-# ------------------------ TAB 7 ------------------------
-# (RCA Validator – same logic, just model=DEPLOYMENT_NAME)
-
-# ------------------------ TAB 8 ------------------------
-# (Incident Mapper – no GPT calls, just TF-IDF similarity)
-
-# ------------------------ TAB 9 ------------------------
-# (Business Impact Estimator – same logic, just model=DEPLOYMENT_NAME)
-# ------------------------ TAB 6 ------------------------
 with tabs[6]:
     st.header("📝 KB Article Generator")
     from fpdf import FPDF
     import tempfile
+
+    def sanitize_text(text: str) -> str:
+        return text.encode("ascii", "ignore").decode()
 
     kb_ready = [t for t in st.session_state.tickets if t["step"] >= 4]
     if not kb_ready:
@@ -504,6 +496,9 @@ with tabs[7]:
     from fpdf import FPDF
     import tempfile
 
+    def sanitize_text(text: str) -> str:
+        return text.encode("ascii", "ignore").decode()
+
     st.info("⏳ Waiting for RCA validation to start...")
     validated_this_round = False
 
@@ -540,14 +535,14 @@ Is the RCA logically sound? Suggest improvements if needed."""
                     pdf = FPDF()
                     pdf.add_page()
                     pdf.set_font("Arial", size=12)
-                    pdf.multi_cell(0, 10, sanitize_text(f"""Ticket ID: {ticket_id}
+                    rca_text = f"""Ticket ID: {ticket_id}
 
 Issue Summary:
 {issue_summary}
 
 RCA Validation Result:
-{result}"""))
-
+{result}"""
+                    pdf.multi_cell(0, 10, sanitize_text(rca_text))
 
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                         pdf.output(tmp_file.name)
@@ -623,6 +618,9 @@ with tabs[9]:
     from fpdf import FPDF
     import tempfile
 
+    def sanitize_text(text: str) -> str:
+        return text.encode("ascii", "ignore").decode()
+
     st.info("⏳ Waiting for Business Impact estimation to start...")
     impact_this_round = False
 
@@ -665,14 +663,8 @@ Provide this as a short summary."""
                     pdf = FPDF()
                     pdf.add_page()
                     pdf.set_font("Arial", size=12)
-                    pdf.multi_cell(0, 10, sanitize_text(f"""Ticket ID: {ticket_id}
-
-Business Impact Summary:
-
-{impact}"""))
-
-
-{impact}""")
+                    impact_text = f"Ticket ID: {ticket_id}\n\nBusiness Impact Summary:\n\n{impact}"
+                    pdf.multi_cell(0, 10, sanitize_text(impact_text))
 
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                         pdf.output(tmp_file.name)
@@ -701,4 +693,3 @@ Business Impact Summary:
         else:
             st.info("⏳ Business impact will be generated in next refresh.")
         st.markdown("---")
-
