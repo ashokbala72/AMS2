@@ -11,3 +11,5 @@ tqdm
 langchain
 faiss-cpu
 tiktoken
+langchain
+langchain-openai
