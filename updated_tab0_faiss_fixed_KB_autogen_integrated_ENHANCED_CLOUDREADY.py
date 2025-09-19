@@ -4,7 +4,7 @@ import streamlit as st
 from streamlit_autorefresh import st_autorefresh
 import pandas as pd
 import time
-import openai
+from openai import AzureOpenAI
 import os
 import textwrap
 from dotenv import load_dotenv
@@ -56,26 +56,43 @@ def safe_ticket_load():
 
 
 
+import streamlit as st
+from dotenv import load_dotenv
+import os
+
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
-client = openai.OpenAI()
+
+def get_secret(name):
+    return st.secrets.get(name) or os.getenv(name)
+
+client = AzureOpenAI(
+    api_key=get_secret("AZURE_OPENAI_API_KEY"),
+    api_version="2024-12-01-preview",
+    azure_endpoint=get_secret("AZURE_OPENAI_ENDPOINT")
+)
+DEPLOYMENT_NAME = "gpt-4o-raj"
+
 
 
 
 # ---------------- CHROMA VECTOR DB SETUP ----------------
 from langchain.vectorstores import FAISS
-from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain_openai import AzureOpenAIEmbeddings
 from langchain.docstore.document import Document
-
-
-from langchain.docstore.document import Document
+from langchain.vectorstores import FAISS
+from langchain_openai import AzureOpenAIEmbeddings
 
 if "vector_index" not in st.session_state:
-    embeddings = OpenAIEmbeddings()
+    embeddings = AzureOpenAIEmbeddings(
+        model=DEPLOYMENT_NAME,
+        openai_api_key=get_secret("AZURE_OPENAI_API_KEY"),
+        openai_api_version="2024-12-01-preview",
+        azure_endpoint=get_secret("AZURE_OPENAI_ENDPOINT")
+    )
     dummy_doc = [Document(page_content="Placeholder", metadata={"source": "init"})]
     st.session_state.vector_index = FAISS.from_documents(dummy_doc, embeddings)
 
-
+# keep active_tab_index logic below
 if "active_tab_index" not in st.session_state:
     query_params = st.query_params
     tab_index_raw = query_params.get("tab", [0])[0]
@@ -86,9 +103,6 @@ if "active_tab_index" not in st.session_state:
     st.session_state["active_tab_index"] = tab_index
 
 tab_index = st.session_state["active_tab_index"]
-
-
-
 
 if "tickets" not in st.session_state:
     st.session_state.tickets = []
@@ -245,10 +259,10 @@ with tabs[1]:
                 """)
                 try:
                     response = client.chat.completions.create(
-                        model="gpt-3.5-turbo",
-                        messages=[{"role": "user", "content": prompt}],
-                        max_tokens=500
-                    )
+     model=DEPLOYMENT_NAME,
+     messages=[{"role": "user", "content": prompt}],
+     max_tokens=500
+)
                     output = response.choices[0].message.content.strip()
                     st.session_state.why_map[selected] = output
                     lines = output.splitlines()
