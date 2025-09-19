@@ -10,6 +10,11 @@ from dotenv import load_dotenv
 from integration_loader import get_ticket_data
 from openai import AzureOpenAI
 
+def sanitize_text(text: str) -> str:
+    """Remove characters not supported by FPDF (latin-1 only)."""
+    return text.encode("ascii", "ignore").decode()
+
+
 # ---------------- Streamlit Setup ----------------
 st.set_page_config(page_title="Agentic AMS Ticket Flow", layout="wide")
 
@@ -462,7 +467,7 @@ Please write a SAP-style KB article."""
                         pdf = FPDF()
                         pdf.add_page()
                         pdf.set_font("Arial", size=12)
-                        pdf.multi_cell(0, 10, article)
+                        pdf.multi_cell(0, 10, sanitize_text(article))
 
                         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                             pdf.output(tmp_file.name)
@@ -535,13 +540,14 @@ Is the RCA logically sound? Suggest improvements if needed."""
                     pdf = FPDF()
                     pdf.add_page()
                     pdf.set_font("Arial", size=12)
-                    pdf.multi_cell(0, 10, f"""Ticket ID: {ticket_id}
+                    pdf.multi_cell(0, 10, sanitize_text(f"""Ticket ID: {ticket_id}
 
 Issue Summary:
 {issue_summary}
 
 RCA Validation Result:
-{result}""")
+{result}"""))
+
 
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
                         pdf.output(tmp_file.name)
@@ -659,9 +665,12 @@ Provide this as a short summary."""
                     pdf = FPDF()
                     pdf.add_page()
                     pdf.set_font("Arial", size=12)
-                    pdf.multi_cell(0, 10, f"""Ticket ID: {ticket_id}
+                    pdf.multi_cell(0, 10, sanitize_text(f"""Ticket ID: {ticket_id}
 
 Business Impact Summary:
+
+{impact}"""))
+
 
 {impact}""")
 
