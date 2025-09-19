@@ -153,14 +153,16 @@ with tabs[0]:
         ticket_id = ticket["id"]
         issue_summary = ""
         if "ticket_context_df" in st.session_state and not st.session_state.ticket_context_df.empty:
-            match_row = st.session_state.ticket_context_df[st.session_state.ticket_context_df["Ticket ID"] == ticket_id]
+            match_row = st.session_state.ticket_context_df[
+                st.session_state.ticket_context_df["Ticket ID"] == ticket_id
+            ]
             if not match_row.empty:
                 issue_summary = match_row.iloc[0].get("Issue Summary", "")[:80]
         if (search_term in ticket_id.lower()) or (search_term in issue_summary.lower()):
             filtered_tickets.append((ticket, issue_summary))
 
     triage_data = []
-    for ticket, summary in filtered_tickets[-50:]:
+    for ticket, summary in filtered_tickets[-50:]:  # show last 50 matching
         ticket_id = ticket['id']
         priority = ["Low", "Medium", "High"][(int(ticket_id.split('-')[1]) % 3)]
         row = {"Ticket": ticket_id, "Issue Summary": summary, "Priority": priority}
@@ -169,8 +171,11 @@ with tabs[0]:
             cell = ""
             for step in substeps:
                 if ticket["step"] == step:
-                    if agent in ["KB Agent", "8D Agent"]:
-                        emoji = "🟢" if ticket["color"] == "green" else "⚫"
+                    if agent == "8D Agent":
+                        # ✅ Force green if step = 6 (8D Complete)
+                        emoji = "🟢" if ticket["step"] == 6 else "⚫"
+                    elif agent == "KB Agent":
+                        emoji = "🟢" if ticket.get("color") == "green" else "⚫"
                     else:
                         emoji = "⚫"
                     cell += emoji + "<br>"
@@ -189,7 +194,11 @@ with tabs[0]:
         </style>
     """, unsafe_allow_html=True)
 
-    st.markdown('<div class="scroll-wrapper">' + df_triage.to_html(escape=False, index=False, classes="ticket-table") + '</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="scroll-wrapper">' +
+        df_triage.to_html(escape=False, index=False, classes="ticket-table") +
+        '</div>', unsafe_allow_html=True
+    )
     st.info("Status is auto-refreshed every 5 seconds. 🕐")
 
 
